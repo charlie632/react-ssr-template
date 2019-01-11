@@ -1,0 +1,22 @@
+{
+    "parser": "babel-eslint",
+    "extends": ["standard", "plugin:react/recommended"],
+    "rules": {
+        "indent": [0, 4],
+        "react/react-in-jsx-scope": 0,
+        "react/prop-types": 0,
+        "react/display-name": 0,
+        "space-before-function-paren": 0
+    },
+    "settings": {
+        "react": {
+            "version": "16.0.4"
+        }
+    },
+    "globals": {
+        "localStorage": true,
+        "fetch": true,
+        "test": true,
+        "expect": true
+    }
+}
