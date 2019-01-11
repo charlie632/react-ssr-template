@@ -8,8 +8,6 @@ import Logo from '../assets/logo.svg'
 import Container from './Container'
 import ToggleMode from './ToggleMode'
 
-import linkParser from '../Utils/link-parser'
-
 const Nav = styled.nav`
   display: flex;
   align-items: center;
@@ -80,56 +78,6 @@ export default class Navigation extends Component {
         submitError: false
       })
     }, 3000)
-  }
-
-  submit = async (e, createVideos, values, setSubmitting, handleReset) => {
-    e.preventDefault()
-
-    // attach it
-    this.handleReset = handleReset
-
-    if (values.name.trim() === '' || values.link.trim() === '') {
-      this.handleError('You must fill in all of the fields')
-      return false
-    }
-
-    const link = linkParser(values.link)
-
-    if (link.length !== 11) {
-      this.handleError(link)
-      return false
-    }
-
-    // remove multiple spaces from name
-    values.name = String(values.name)
-      .replace(/\s{2,}/gu, ' ')
-      .trim()
-
-    const valuesToBeSaved = {
-      ...values,
-      link
-    }
-
-    try {
-      await createVideos({ variables: { ...valuesToBeSaved } })
-    } catch (err) {
-      const msg = err.message.includes('A unique constraint')
-        ? 'Awesome! We already have this. Thanks anyway.'
-        : err.message
-
-      this.handleError(msg)
-      return false
-    }
-
-    setSubmitting(false)
-    handleReset()
-    this.setState({ submitted: true }, () => {
-      setTimeout(() => {
-        this.setState({
-          submitted: false
-        })
-      }, 3000)
-    })
   }
 
   render = () => {
